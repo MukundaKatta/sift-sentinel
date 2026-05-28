@@ -1,0 +1,23 @@
+{
+  "case_id": "DEMO-CASE",
+  "verdict": "compromised",
+  "expected_iocs": [
+    "C:\\Users\\victim\\AppData\\Local\\Temp\\svchost.exe",
+    "185.220.101.47:443",
+    "http://185.220.101.47/gate.php",
+    "exfil@mail.protonmail.com",
+    "10.0.0.9",
+    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  ],
+  "expected_techniques": [
+    "T1036.005",
+    "T1055",
+    "T1071.001",
+    "T1547.001",
+    "T1059.001",
+    "T1567",
+    "T1021.001",
+    "T1543.003"
+  ],
+  "notes": "Analyst answer key for the simulated intrusion: a Cobalt Strike beacon masquerading as svchost.exe from a user Temp path, kept alive by an HKLM Run key, beaconing to 185.220.101.47. The payload SHA-256 is included on purpose. The scripted planner does not run the yara hash pivot, so the accuracy report should flag that one hash as a miss (IOC recall below 1.0) while techniques score 1.0. A perfect score on a self-graded run would not be credible."
+}

@@ -1,0 +1,4 @@
+SYNTHETIC SAMPLE - sift-sentinel offline demo fixture - NOT real evidence.
+This stand-in disk image exists only so the offline demo can hash a file and
+populate the Evidence Integrity (chain-of-custody) section of the IR report.
+The simulated backend does not parse these bytes; it replays a fixed intrusion.

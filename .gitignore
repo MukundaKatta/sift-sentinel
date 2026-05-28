@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Environment / secrets
+.env
+*.key
+
+# Case data and run artifacts (never commit evidence)
+cases/
+runs/
+sift-workspace/
+*.raw
+*.mem
+*.E01
+*.dd
+*.vmem
+
+# ...but DO ship the tiny synthetic demo fixtures so the one-command offline
+# demo can show the chain-of-custody hashes. These are obviously-fake
+# placeholders, never real case data.
+!evidence/disk.raw
+!evidence/memory.mem
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
