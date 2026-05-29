@@ -17,6 +17,12 @@ Built for the FIND EVIL! challenge. The whole guarded loop runs offline with no 
   tokens (in/out): 0/0
 ```
 
+## Architecture
+
+![sift-sentinel architecture: a guarded plan-act-validate loop over the SANS Find Evil playbook. A planner proposes one tool call, the check_call guardrail enforces an allowlist, explicit-deny, and path jail, the backend runs it over MCP against the SIFT Workstation or a simulated stand-in, the verify_evidence guardrail re-checks a SHA-256 integrity ledger, and findings integrate into a revisable hypothesis. Every step writes a JSONL audit record, and the run emits an IR report, audit trail, state, and accuracy report.](docs/architecture.png)
+
+The agent walks a fixed SANS Find Evil playbook. Every tool call the planner proposes passes a code-level guardrail (allowlist, explicit-deny, path jail) before the backend runs it; evidence integrity is re-verified against a case-open SHA-256 baseline after every call; and every transition is written to a replayable JSONL audit trail. The simulated backend runs the whole loop offline, so the architecture and the guardrails are verifiable with no API key and no VM.
+
 ## The 60-second proof
 
 No API key, no SIFT VM, no network. This replays a fixed simulated intrusion through the scripted planner and prints both reports:
