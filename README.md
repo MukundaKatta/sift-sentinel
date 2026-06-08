@@ -40,10 +40,19 @@ PYTHONPATH=src python -m sift_sentinel \
   --workspace ./sift-workspace
 ```
 
-Run the tests (32, all offline and deterministic):
+Run the tests (all offline and deterministic):
 
 ```bash
 python -m pytest -q
+```
+
+A small subset of those checks also runs with **only the Python standard
+library** -- no `pytest`, no `pydantic`, no install at all -- so the tool
+catalog, the explicit-deny list, and the Find Evil playbook invariants stay
+verifiable in a bare interpreter:
+
+```bash
+python -m unittest discover -s tests/unit
 ```
 
 The repo ships two tiny synthetic evidence fixtures (`evidence/disk.raw`, `evidence/memory.mem`) so the offline run hashes them at case open and the IR report's chain-of-custody section shows real SHA-256 values. They are obvious placeholders, not real case data.
@@ -170,7 +179,9 @@ src/sift_sentinel/
   accuracy.py     precision/recall/F1 against analyst ground truth
   report.py       IR report + accuracy report (pure functions of state)
   cli.py          argparse entrypoint
-tests/            32 offline, deterministic tests
+  py.typed        PEP 561 marker so consumers see the inline type hints
+tests/            offline, deterministic pytest suite
+  unit/           standard-library-only subset (python -m unittest)
 datasets/         simulated-intrusion ground-truth key
 evidence/         tiny synthetic disk.raw + memory.mem demo fixtures (not real evidence)
 examples/         run_offline.py
@@ -180,7 +191,7 @@ examples/         run_offline.py
 
 Honest scope. What is done and verifiable right now, with no account or VM:
 
-- The full guarded plan-act-validate loop, all four guardrail checks, the audit trail, the self-scoring, and all four deliverables run offline. `python -m pytest -q` is 32 green; `python examples/run_offline.py` confirms the simulated compromise end to end.
+- The full guarded plan-act-validate loop, all four guardrail checks, the audit trail, the self-scoring, and all four deliverables run offline. `python -m pytest -q` is green; `python examples/run_offline.py` confirms the simulated compromise end to end.
 
 What needs the real environment, and is therefore not yet demonstrated against live evidence:
 
