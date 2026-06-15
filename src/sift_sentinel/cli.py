@@ -23,6 +23,7 @@ from .audit import AuditLog
 from .config import DENIED_TOOLS, READONLY_TOOLS, Settings
 from .guardrails import Guardrail
 from .mcp_client import ProtocolSiftBackend, SimulatedSiftBackend
+from .playbook import PHASES
 from .report import distinct_findings, render_accuracy_report, render_ir_report
 
 
@@ -74,7 +75,7 @@ def _print_summary(
     print(f"  confidence     : {hyp.confidence:.2f} ({hyp.status})")
     distinct = len(distinct_findings(state.findings))
     print(f"  findings       : {distinct} distinct ({len(state.findings)} recorded)")
-    print(f"  phases done    : {len(state.completed_phases)}/{len(state.completed_phases) or 1}")
+    print(f"  phases done    : {len(state.completed_phases)}/{len(PHASES)}")
     print(f"  tool calls     : {summary['tool_calls']}")
     print(f"  denied calls   : {summary['denied_calls']} {summary['denials_by_code'] or ''}")
     print(f"  tokens (in/out): {summary['tokens_in']}/{summary['tokens_out']}")

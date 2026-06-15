@@ -11,7 +11,16 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass, field
 
-from dotenv import load_dotenv
+try:  # python-dotenv is a convenience for loading a local .env file.
+    from dotenv import load_dotenv
+except ModuleNotFoundError:  # pragma: no cover - exercised only without the dep
+    # The offline simulated path (the documented one-command demo and the test
+    # suite) reads only real environment variables and never needs a .env file,
+    # so importing the package must not hard-require python-dotenv. Fall back to
+    # a no-op loader when it is absent.
+    def load_dotenv(*_args: object, **_kwargs: object) -> bool:
+        return False
+
 
 load_dotenv()
 
